@@ -1,0 +1,72 @@
+service: "richpanelassessment"
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: ap-south-1
+
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-offline
+
+functions:
+  # Lambda functions to handle auth routes
+  createUser:
+    handler: src/Handlers/AuthHandlers/createUser.handler
+    events:
+      - httpApi:
+          path: /api/v1/auth/signup
+          method: POST
+  login:
+    handler: src/Handlers/AuthHandlers/login.handler
+    events:
+      - httpApi:
+          path: /api/v1/auth/login
+          method: POST
+  getUser:
+    handler: src/Handlers/AuthHandlers/getUser.handler
+    events:
+      - httpApi:
+          path: /api/v1/auth/get-user
+          method: GET
+
+  # Handlers for sending and receiving messages
+  getAllMessages:
+    handler: src/Handlers/MessageHandlers/getMessages.handler
+    events:
+      - httpApi:
+          path: /api/v1/messages/getAllMessages
+          method: GET
+  sendMessage:
+    handler: src/Handlers/MessageHandlers/sendMessage.handler
+    events:
+      - httpApi:
+          path: /api/v1/messages/sendMessage
+          method: POST
+
+  # Handlers for facebook api calls and webhooks
+
+  receiveMessage:
+    handler: src/Handlers/FacebookApiHandlers/receiveMessageWebhook.handler
+    events:
+      - httpApi:
+          path: /webhook/receiveMessage
+          method: POST
+
+  receiveMessageCheck:
+    handler: src/Handlers/FacebookApiHandlers/receiveMessageWebhookCheck.handler
+    events:
+      - httpApi:
+          path: /webhook/receiveMessage
+          method: GET
+
+  websocketHandler:
+    handler: src/Handlers/WebsocketHandler/websocketHandler.handler
+    events:
+      - websocket:
+          route: $connect
+      - websocket:
+          route: $disconnect
+      - websocket:
+          route: $default

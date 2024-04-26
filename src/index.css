@@ -1,0 +1,36 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  scroll-behavior: smooth;
+}
+
+#root {
+  padding: 0px !important;
+  margin: 0px !important;
+  font-family: poppins;
+}
+
+
+.loading-container {
+  animation: fadeInAnimation ease-in-out 0.75s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+::-webkit-scrollbar {
+  display: none;
+}

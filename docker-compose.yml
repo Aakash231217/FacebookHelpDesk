@@ -1,0 +1,22 @@
+version: '3'
+services:
+  client:
+    container_name: richpanel-assessment-AakashSingh-fb-helpdesk-client
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./src:/app/src
+    ports:
+      - "8000:8000"
+  
+  server:
+    container_name: richpanel-assessment-AakashSingh-fb-helpdesk-server
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    volumes:
+      - ./Backend/src:/app/src
+    ports:
+      - "3000:3000"
+      - "3001:3001"
